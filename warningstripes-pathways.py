@@ -112,7 +112,7 @@ def plot_warming_stripes(years, anomaly, segment_years, segment_anom, proj_years
     ax.set_xlim(segment_years[0], proj_years[-1] + 20)
     ax.set_ylim(0, y_pos)
     ax.axis('off')
-    ax.set_title("Warming Stripes with copied fluctuations and linear ramps")
+    ax.set_title("Warming Stripes with RCP Pathways", fontsize=16, pad=20)
 
     # Positions for labels:
     label_y_pos = -0.01  # slightly below the x-axis baseline (adjust as needed)
