@@ -1,3 +1,4 @@
 numpy==2.3.5
 matplotlib==3.10.7
 requests==2.32.5
+scype==1.16.3
