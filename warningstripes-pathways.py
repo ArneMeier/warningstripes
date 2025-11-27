@@ -115,7 +115,7 @@ def plot_warming_stripes(years, anomaly, segment_years, segment_anom, proj_years
     ax.set_title("Warming Stripes with RCP Pathways", fontsize=16, pad=20)
 
     # Positions for labels:
-    label_y_pos = -0.01  # slightly below the x-axis baseline (adjust as needed)
+    label_y_pos = -0.01  # slightly below the x-axis baseline
     ax.text(1850, label_y_pos, "1850", ha='center', va='top', fontsize=12)
     ax.text(years[-1], label_y_pos, "Now", ha='center', va='top', fontsize=12)
     ax.text(2200, label_y_pos, "2200", ha='center', va='top', fontsize=12)
@@ -124,7 +124,7 @@ def plot_warming_stripes(years, anomaly, segment_years, segment_anom, proj_years
     ax.set_xlim(min(1850, segment_years[0]), 2220)
     ax.set_ylim(label_y_pos - 0.1, ax.get_ylim()[1])  # extend lower limit a bit for label visibility
 
-    # RCP Explanations labels, text align is right and font in white text color, position is over the rcp path way plot at the rear end, thin font
+    # RCP Explanations labels, text align is right and font in white text color, position is over the rcp path way plot at the rear end
     label_x_pos_explanations = 2190
     ax.text(label_x_pos_explanations, 0.7, "Emissions peak by 2030\nnegative emissions by 2080\n+1.9°C in 2100, +1.4°C by 2200", ha='right', va='center', fontsize=10, color='white')
     ax.text(label_x_pos_explanations, 0.5, "Emissions peak by 2050\n+2.7°C in 2100, +2.8°C by 2200", ha='right', va='center', fontsize=10, color='white')
