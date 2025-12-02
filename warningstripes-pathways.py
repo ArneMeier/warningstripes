@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import requests
 from matplotlib.patches import Rectangle
 import matplotlib.colors as mcolors
+from matplotlib.colorbar import ColorbarBase
 
 # Function to download and parse Berkeley Earth temperature anomaly data
 def download_and_parse_berkeley_earth(url):
@@ -131,6 +132,17 @@ def plot_warming_stripes(years, anomaly, segment_years, segment_anom, proj_years
     ax.text(label_x_pos_explanations, 0.3, "Emissions peak by 2090\n+3.1°C in 2100, +3.7°C by 2200", ha='right', va='center', fontsize=10, color='white')
     ax.text(label_x_pos_explanations, 0.1, "Emissions peak between 2100-2150\n+4.8°C in 2100, +7.8°C by 2200", ha='right', va='center', fontsize=10, color='white')
 
+    # Plot legend for color scale, -1°, 0°, +1°, +2°, +3°, +4°, +5°, +6°, +7°, +8°
+    cbar_ax = fig.add_axes([0.25, 0.05, 0.5, 0.03])  # [left, bottom, width, height]
+    norm = mcolors.Normalize(vmin=vmin, vmax=vmax)
+    cbar = ColorbarBase(cbar_ax, cmap=mcolors.ListedColormap(
+        [custom_cmap(v, vmin, vmax, cmap1, cmap2) for v in np.linspace(vmin, vmax, 256)]
+    ), norm=norm, orientation='horizontal')
+    cbar.set_label('Temperature Anomaly (°C)', fontsize=12)
+    cbar.set_ticks(np.arange(np.ceil(vmin), np.floor(vmax)+1, 1))
+    cbar.ax.tick_params(labelsize=10)    
+
+
     # Export to SVG and PDF
     plt.savefig("warming_stripes.svg", format='svg', bbox_inches='tight')
     plt.savefig("warming_stripes.pdf", format='pdf', bbox_inches='tight')
@@ -166,7 +178,8 @@ if __name__ == "__main__":
         rcp_targets_2100, rcp_targets_2200)
 
     # Color scale min and max covers all projected values plus copied segment
-    vmin = np.min(np.concatenate([shifted_segment] + [v for v in projections.values()]))
+    # vmin = np.min(np.concatenate([shifted_segment] + [v for v in projections.values()]))
+    vmin = -1.0  # set minimum to -1.0°C for better color scale
     vmax = np.max(np.concatenate([shifted_segment] + [v for v in projections.values()]))
 
     cmap1 = plt.get_cmap('coolwarm')
@@ -175,3 +188,5 @@ if __name__ == "__main__":
 
     plot_warming_stripes(years, anomaly, segment_years, shifted_segment,
                          proj_years, projections, vmin, vmax, cmap1, cmap2)
+
+    
